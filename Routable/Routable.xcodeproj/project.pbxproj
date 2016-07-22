@@ -14,6 +14,9 @@
 		27CB513F1D39CF31009D6468 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB513D1D39CF31009D6468 /* LaunchScreen.storyboard */; };
 		27CB514A1D39CF31009D6468 /* RoutableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51491D39CF31009D6468 /* RoutableTests.swift */; };
 		27CB51551D39CF31009D6468 /* RoutableUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51541D39CF31009D6468 /* RoutableUITests.swift */; };
+		27CB51651D39CFE0009D6468 /* RouterParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51641D39CFE0009D6468 /* RouterParams.swift */; };
+		27CB51671D39D049009D6468 /* ZKRouterOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51661D39D049009D6468 /* ZKRouterOptions.swift */; };
+		27CB516B1D3A346E009D6468 /* ZKRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB516A1D3A346E009D6468 /* ZKRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		27CB51501D39CF31009D6468 /* RoutableUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutableUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CB51541D39CF31009D6468 /* RoutableUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutableUITests.swift; sourceTree = "<group>"; };
 		27CB51561D39CF31009D6468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27CB51641D39CFE0009D6468 /* RouterParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouterParams.swift; path = Class/RouterParams.swift; sourceTree = "<group>"; };
+		27CB51661D39D049009D6468 /* ZKRouterOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZKRouterOptions.swift; path = Class/ZKRouterOptions.swift; sourceTree = "<group>"; };
+		27CB516A1D3A346E009D6468 /* ZKRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZKRouter.swift; path = Class/ZKRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +103,9 @@
 		27CB51331D39CF31009D6468 /* Routable */ = {
 			isa = PBXGroup;
 			children = (
+				27CB51631D39CF86009D6468 /* Demo */,
+				27CB51621D39CF78009D6468 /* Class */,
 				27CB51341D39CF31009D6468 /* AppDelegate.swift */,
-				27CB51361D39CF31009D6468 /* ViewController.swift */,
-				27CB51381D39CF31009D6468 /* Main.storyboard */,
 				27CB513B1D39CF31009D6468 /* Assets.xcassets */,
 				27CB513D1D39CF31009D6468 /* LaunchScreen.storyboard */,
 				27CB51401D39CF31009D6468 /* Info.plist */,
@@ -123,6 +129,25 @@
 				27CB51561D39CF31009D6468 /* Info.plist */,
 			);
 			path = RoutableUITests;
+			sourceTree = "<group>";
+		};
+		27CB51621D39CF78009D6468 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				27CB51641D39CFE0009D6468 /* RouterParams.swift */,
+				27CB51661D39D049009D6468 /* ZKRouterOptions.swift */,
+				27CB516A1D3A346E009D6468 /* ZKRouter.swift */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		27CB51631D39CF86009D6468 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				27CB51361D39CF31009D6468 /* ViewController.swift */,
+				27CB51381D39CF31009D6468 /* Main.storyboard */,
+			);
+			name = Demo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27CB516B1D3A346E009D6468 /* ZKRouter.swift in Sources */,
 				27CB51371D39CF31009D6468 /* ViewController.swift in Sources */,
 				27CB51351D39CF31009D6468 /* AppDelegate.swift in Sources */,
+				27CB51671D39D049009D6468 /* ZKRouterOptions.swift in Sources */,
+				27CB51651D39CFE0009D6468 /* RouterParams.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +515,7 @@
 				27CB515B1D39CF31009D6468 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		27CB515C1D39CF31009D6468 /* Build configuration list for PBXNativeTarget "RoutableTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +524,7 @@
 				27CB515E1D39CF31009D6468 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		27CB515F1D39CF31009D6468 /* Build configuration list for PBXNativeTarget "RoutableUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +533,7 @@
 				27CB51611D39CF31009D6468 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
