@@ -8,93 +8,67 @@
 
 import UIKit
 
-typealias RouterOpenCallBack = ()->(Dictionary<String,Any>?)
+typealias RouterOpenCallBack = (Dictionary<String,Any>?)->()
 
 class ZKRouterOptions {
+//    是否以modal的形式转换
     var modal:Bool = false
+//    该方法在PAD上面会产生区别，在手机上都是直接从下面跳出来的效果
     var presentationStyle:UIModalPresentationStyle = .None
+//    modal的转换方法
     var transitionStyle:UIModalTransitionStyle = .CoverVertical
+//    用来设置每次默认需要传的值
     var defaultParams:Dictionary<String,Any>?
+//    是否设置为根VC
     var shouldOpenAsRootViewController:Bool = false
+    
+    
+//    回调函数
     var callback:RouterOpenCallBack?
-    var openClass:AnyClass
+//    当前这个VC的类型
+    var openClass:AnyClass?
     
 //MARK:INIT
+
     init(presentationStyle:UIModalPresentationStyle,transitionStyle:UIModalTransitionStyle,defaultParams:Dictionary<String,Any>?,isRoot:Bool,isModal:Bool){
-//        super.init()
         self.presentationStyle = presentationStyle
         self.transitionStyle = transitionStyle
         self.defaultParams = defaultParams
         self.shouldOpenAsRootViewController = isRoot
         self.modal = isModal
+        self.callback = nil
     }
     
-    static func routerOptions() -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: .None, transitionStyle: .CoverVertical, defaultParams: nil, isRoot: false, isModal: false)
+    convenience init(){
+        self.init(presentationStyle:.None,transitionStyle:.CoverVertical,defaultParams:nil ,isRoot:false,isModal:false)
     }
     
-    static func routerOptionsAsModal() -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: .None, transitionStyle: .CoverVertical, defaultParams: nil, isRoot: false, isModal: true)
+    convenience init(style:UIModalPresentationStyle){
+        self.init(presentationStyle:style,transitionStyle:.CoverVertical,defaultParams:nil ,isRoot:false,isModal:false)
     }
     
-    static func routerOptionsWithPresentationStyle(style:UIModalPresentationStyle) -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: style, transitionStyle: .CoverVertical, defaultParams: nil, isRoot: false, isModal: false)
+    convenience init(style:UIModalTransitionStyle){
+        self.init(presentationStyle:.None,transitionStyle:style,defaultParams:nil ,isRoot:false,isModal:false)
     }
     
-    static func routerOptionsWithTransitionStyle(style:UIModalTransitionStyle) -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: .None, transitionStyle: style, defaultParams: nil, isRoot: false, isModal: false)
+    convenience init(defaultParams:Dictionary<String,Any>?){
+        self.init(presentationStyle:.None,transitionStyle:.CoverVertical,defaultParams:defaultParams ,isRoot:false,isModal:false)
     }
     
-    static func routerOptionsForDefaultParams(defaultParams:Dictionary<String,Any>?) -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: .None, transitionStyle: .CoverVertical, defaultParams: defaultParams, isRoot: false, isModal: false)
+    convenience init(modal:Bool){
+        self.init(presentationStyle:.None,transitionStyle:.CoverVertical,defaultParams:nil ,isRoot:false,isModal:modal)
     }
     
-    static func routerOptionsAsRoot() -> ZKRouterOptions {
-        return ZKRouterOptions.init(presentationStyle: .None, transitionStyle: .CoverVertical, defaultParams: nil, isRoot: true, isModal: false)
+    convenience init(root:Bool){
+        self.init(presentationStyle:.None,transitionStyle:.CoverVertical,defaultParams:nil ,isRoot:root,isModal:false)
     }
     
-    static func modalInit() -> ZKRouterOptions {
-        return ZKRouterOptions.routerOptionsAsModal()
+    static func initModal() -> ZKRouterOptions{
+        return ZKRouterOptions.init(modal: true);
     }
     
-    static func withPresentationStyle(style:UIModalPresentationStyle) -> ZKRouterOptions {
-        return ZKRouterOptions.routerOptionsWithPresentationStyle(style)
+    static func initWithRoot() -> ZKRouterOptions{
+        return ZKRouterOptions.init(root: true)
     }
-    
-    static func withTransitionStyle(style:UIModalTransitionStyle) -> ZKRouterOptions {
-        return ZKRouterOptions.routerOptionsWithTransitionStyle(style)
-    }
-    
-    static func forDefaultParams(defaultParams:Dictionary<String,Any>?) -> ZKRouterOptions {
-        return ZKRouterOptions.routerOptionsForDefaultParams(defaultParams)
-    }
-    
-    static func root() -> ZKRouterOptions {
-        return ZKRouterOptions.routerOptionsAsRoot()
-    }
-    
-//MARK:SETTER
-    func setModal() {
-        self.modal = true
-    }
-    
-    func setPresentationStyle(style:UIModalPresentationStyle) {
-        self.presentationStyle = style
-    }
-    
-    func setTransitionStyle(style:UIModalTransitionStyle) {
-        self.transitionStyle = style
-    }
-    
-    func setDefaultParams(defaultParams:Dictionary<String,Any>) {
-        self.defaultParams = defaultParams
-    }
-    
-    func setRoot() {
-        self.shouldOpenAsRootViewController = true
-    }
-    
-    
-    
     
 }

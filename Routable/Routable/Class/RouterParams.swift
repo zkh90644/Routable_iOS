@@ -9,34 +9,36 @@
 import UIKit
 
 class RouterParams {
-    private var routerOptions:ZKRouterOptions?
-    private var openParams:Dictionary<String,Any>?
-    private var extraParams:Dictionary<String,Any>?
-    private var controllerParams:Dictionary<String,Any>?{
+//    routerOptions为页面转换的方式
+    var routerOptions:ZKRouterOptions
+//    openParams为url中的不一样的值组成的dic,如果两个界面需要区分的话，基本页面需要为name/:,后一个页面为name/:需要的值
+    private var openParams:Dictionary<String,String>
+//    extraParams为VC切换的我们想要传递过去的值
+    private var extraParams:Dictionary<String,Any>
+//    上面两个之和，回调+切换时候创建的，一般在创建的时候作为参数传递过去。
+    var controllerParams:Dictionary<String,Any>{
         get{
             var temp = Dictionary<String,Any>()
             
-            if openParams == nil {
-                print("openParams is not init,It's empty")
-            }else{
-                for (key,value) in openParams! {
+            if routerOptions.defaultParams != nil {
+                for (key,value) in routerOptions.defaultParams! {
                     temp.updateValue(value, forKey: key)
                 }
             }
             
-            if extraParams == nil{
-                print("extraParams is not init,It's empty")
-            }else{
-                for (key,value) in extraParams! {
-                    temp.updateValue(value, forKey: key)
-                }
+            for (key,value) in openParams {
+                temp.updateValue(value, forKey: key)
+            }
+            
+            for (key,value) in extraParams {
+                temp.updateValue(value, forKey: key)
             }
             
             return temp
         }
     }
     
-    init(routerOptions:ZKRouterOptions, openParams:Dictionary<String,Any>?, extraParams:Dictionary<String,Any>?) {
+    init(routerOptions:ZKRouterOptions = ZKRouterOptions.init(), openParams:Dictionary<String,String> = Dictionary<String,String>(), extraParams:Dictionary<String,Any> = Dictionary<String,Any>()) {
         self.routerOptions = routerOptions
         self.openParams = openParams
         self.extraParams = extraParams

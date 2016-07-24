@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273672D41D44E8B3007E2F9C /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273672D31D44E8B3007E2F9C /* RouterViewController.swift */; };
 		27CB51351D39CF31009D6468 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51341D39CF31009D6468 /* AppDelegate.swift */; };
 		27CB51371D39CF31009D6468 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB51361D39CF31009D6468 /* ViewController.swift */; };
 		27CB513A1D39CF31009D6468 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB51381D39CF31009D6468 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		273672D31D44E8B3007E2F9C /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouterViewController.swift; path = Class/RouterViewController.swift; sourceTree = "<group>"; };
 		27CB51311D39CF31009D6468 /* Routable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Routable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CB51341D39CF31009D6468 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27CB51361D39CF31009D6468 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,9 +136,10 @@
 		27CB51621D39CF78009D6468 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				27CB51641D39CFE0009D6468 /* RouterParams.swift */,
 				27CB51661D39D049009D6468 /* ZKRouterOptions.swift */,
+				27CB51641D39CFE0009D6468 /* RouterParams.swift */,
 				27CB516A1D3A346E009D6468 /* ZKRouter.swift */,
+				273672D31D44E8B3007E2F9C /* RouterViewController.swift */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				27CB51351D39CF31009D6468 /* AppDelegate.swift in Sources */,
 				27CB51671D39D049009D6468 /* ZKRouterOptions.swift in Sources */,
 				27CB51651D39CFE0009D6468 /* RouterParams.swift in Sources */,
+				273672D41D44E8B3007E2F9C /* RouterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
