@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol UIViewControllerRouter {
-    func initWithRouter(dic:Dictionary<String,Any>)
-}
+typealias RouterOpenCallBack = (Dictionary<String,Any>)->()
 
 enum RouterError:ErrorType {
     case FormatEmpty(String)
@@ -19,71 +17,83 @@ enum RouterError:ErrorType {
     
 }
 
+//重新定义两个变量为结构体
+struct RouterOptions{
+    var modal:Bool = false
+    var presentationStyle:UIModalPresentationStyle = .None
+    var transitionStyle:UIModalTransitionStyle = .CoverVertical
+    var defaultParams = Dictionary<String,Any>()
+    var shouldOpenAsRootViewController:Bool = false
+    
+    var callback:RouterOpenCallBack?
+    var className:AnyClass?
+}
+
+struct RouterParams {
+    var routerOptions = RouterOptions()
+    var openParams = Dictionary<String,String>()
+    var extraParams = Dictionary<String,Any>()
+    var controllerParams:Dictionary<String,Any>{
+        get{
+            var temp = Dictionary<String,Any>()
+            
+            for (key,value) in routerOptions.defaultParams {
+                temp.updateValue(value, forKey: key)
+            }
+            
+            for (key,value) in openParams {
+                temp.updateValue(value, forKey: key)
+            }
+            
+            for (key,value) in extraParams {
+                temp.updateValue(value, forKey: key)
+            }
+            
+            return temp
+        }
+    }
+}
+
+
 class ZKRouter {
-//    ZKRouter中控制跳转的核心
+    
     let navigationController:UINavigationController
     var ignoresExceptions:Bool = false
     
-    private var routes = Dictionary<String,ZKRouterOptions>()
+    private var routes = Dictionary<String,RouterOptions>()
     private var cacheRoutes = Dictionary<String,RouterParams>()
     
-//    创建
     init(nav:UINavigationController){
         self.navigationController = nav
     }
-    
-//    将将来需要跳转的界面或者回调函数存储进去。
-    func map(format:String,callback:(RouterOpenCallBack?),options:ZKRouterOptions = ZKRouterOptions.init()) throws{
-        guard format == "" else {
-            throw RouterError.FormatEmpty("The format is empty,this value shoule not be empty")
-        }
-        options.callback = callback
-        self.routes.updateValue(options, forKey: format);
-    }
-    
-    func map(format:String,toController:AnyClass,options:ZKRouterOptions = ZKRouterOptions.init()) throws{
+
+    func map(format:String,callback:(RouterOpenCallBack?),options:RouterOptions = RouterOptions.init()) throws{
         guard format == "" else {
             throw RouterError.FormatEmpty("The format is empty,this value shoule not be empty")
         }
         
-        options.openClass = toController
+        var tempOptions = options
+        tempOptions.callback = callback
+        
+        self.routes.updateValue(tempOptions, forKey: format);
+    }
+    
+    func map(format:String,toClassName:AnyClass,options:RouterOptions = RouterOptions.init()) throws{
+        guard format == "" else {
+            throw RouterError.FormatEmpty("The format is empty,this value shoule not be empty")
+        }
+        
+        var tempOptions = options
+        tempOptions.className = toClassName
+        
         self.routes.updateValue(options, forKey: format)
     }
     
-//    jump to safari
     func openExternal(url:String) {
         UIApplication.sharedApplication().openURL(NSURL.init(string: url)!)
     }
     
-    //    跳转到下一个VC
-    func open(url:String,animated:Bool = true,extraParams:Dictionary<String,Any>? = nil) throws{
-        do {
-            let params = try self.routerParams(url, extraParams: extraParams)
-            let options = params?.routerOptions
-            if options?.callback != nil{
-                options?.callback!(params?.controllerParams)
-                return ;
-            }
-            
-            let controller = try self.initControllerView(params!)
-            
-            if self.navigationController.presentedViewController != nil {
-                self.navigationController.dismissViewControllerAnimated(animated, completion: nil)
-            }
-            
-//            if ((options?.modal) != false) {
-//                if controller.superclass?.class(UINavigationController) {
-//                    <#code#>
-//                }
-//            }
-            
-        }catch{
-            throw RouterError.RouteNotFoundException("No route found for URL \(url),Params It's nil")
-        }
-        
-        
-        
-    }
+    
     
     func routerParams(url:String,extraParams:Dictionary<String,Any>? = nil) throws -> RouterParams?{
         let givenParts = url.characters.split("/").map(String.init)
@@ -119,27 +129,23 @@ class ZKRouter {
         return openParams
     }
     
-    func initControllerView(params:RouterParams) throws -> RouterViewController {
+    func initControllerView(params:RouterParams) -> UIViewController {
         
-        var vc:RouterViewController?
+        var vc = UIViewController.init(nibName: nil, bundle: nil)
         
-        let className = params.routerOptions.openClass
+        let className = params.routerOptions.className
 
-        if className!.isSubclassOfClass(RouterViewController) {
-            vc = RouterViewController.init(nibName: nil, bundle: nil, dic: params.controllerParams)
+        if className?.superclass {
+            <#code#>
         }
         
-        if vc == nil {
-            throw RouterError.ViewControllerNil("the ViewController is nil")
-        }
-        
-        return vc!
+        return vc
     }
     
-    func getParamsFromUrlComponent(givenUrlCompents:Array<String>,routerUrlComponents:Array<String>) -> Dictionary<String,String>? {
-        var params = Dictionary<String,String>?()
+    func getParamsFromUrlComponent(givenUrlCompents:Array<String>,routerUrlComponents:Array<String>) -> Dictionary<String,String> {
+        var params = Dictionary<String,String>()
         var idx = 0
-        
+
         for routerComponent in routerUrlComponents {
             let givenComponent = givenUrlCompents[idx]
             if routerComponent.hasPrefix(":") {
